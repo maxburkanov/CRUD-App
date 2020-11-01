@@ -1,10 +1,15 @@
 import React, {Component} from 'react';
 import { Table } from 'reactstrap';
+import {withRouter, Link} from "react-router-dom";
+
+import Customer from "./Customer";
 import './App.css';
 
 class Customers extends Component {
 
   render(){
+    const { match, location, history } = this.props
+    console.log('sorry guys',this.props)
     const {customers} = this.props;
     return (
       <div>
@@ -30,10 +35,10 @@ class Customers extends Component {
                 const { id, name, lastName, avatar, email, state, phone,
                 role, github, courses, payment, status } = customer;
                 return (
-                <tr>
+                <tr key={id}>
                   <th scope="row">{id}</th>
                   <td><img src={avatar} /></td>
-                  <td> <a href="/customer/1">{name} {lastName}</a> </td>
+                  <td> <Link to={`/customers/${id}`}>{name} {lastName}</Link> </td>
                   <td>{state}</td>
                   <td>{email}</td>
                   <td>{phone}</td>
@@ -57,7 +62,7 @@ class Customers extends Component {
 
 
 
-export default Customers;
+export default withRouter(Customers );
 
 
 

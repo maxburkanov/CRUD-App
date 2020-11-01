@@ -1,6 +1,36 @@
 * {
     box-sizing: border-box;
 }
+
+.navigation-bar {
+    background-color: #222222;
+    color: white;
+}
+
+.navigation {
+    display: flex;
+    list-style: none;
+    justify-content: flex-start;
+    padding: 10px;
+}
+
+li a {
+    padding: 10px;
+    transition: 0.4s;
+    text-decoration: none;
+    color: grey;
+}
+
+li a:hover {
+    color: white;
+    text-decoration: none;
+}
+
+.active-nav {
+    color: white;
+    border-bottom: 1px solid white;
+}
+
 .app {
     width: 200px;
     margin: 0 auto;
@@ -8,4 +38,7 @@
 .customers img {
     width: 50px;
     border-radius: 50px;
+}
+.single-customer {
+    margin: 50px;
 }

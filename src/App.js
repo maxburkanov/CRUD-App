@@ -1,6 +1,13 @@
 import React, {Component} from 'react';
 import Customers from './Customers';
+import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
+
+import SearchBar from "./SearchBar";
+import Navigation from "./Navigation";
+import Customer from "./Customer";
 import './App.css';
+
+
 
 const customers = [
   {
@@ -48,10 +55,36 @@ class App extends Component {
 
   render(){
     return (
-      <div className="container">
-        <h1> Seytech Customers</h1>
-        <Customers customers={this.state.customers} />
-      </div>
+      <Router>
+        <div>
+          <Navigation />
+          <div>
+            <SearchBar />
+          </div>
+          <div>
+            <Switch>
+              <Route path="/customers/:id" >
+                <Customer customers={customers}/>
+              </Route>
+              <Route path="/customers">
+                <div className="container">
+                  <h1> Seytech Customers</h1>
+                  <Customers customers={this.state.customers} />
+                </div>
+              </Route>
+              <Route path="/about">
+                <div>about</div>                
+              </Route>
+              <Route path="/topics">
+                <div>topics</div>                
+              </Route>
+              <Route path="/">
+                <div>home</div>                
+              </Route>
+            </Switch>
+          </div>
+        </div>
+      </Router>
     )
   }
 }
@@ -60,33 +93,6 @@ class App extends Component {
 
 
 export default App;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
