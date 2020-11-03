@@ -9,15 +9,21 @@ class Customer extends React.Component {
     const {id} = this.props.match.params
     const customer = this.props.customers.find(i => i.id === Number(id))
     return (
-      <div className="single-customer">
+      <div className="single-customer-wrapper">
       {
         Object.keys(customer).map(i=>{
-          return (
-            <div key={i} >
-              <div>{i}</div>
-              <div>{ customer[i] }</div>
+          if(i === 'avatar'){
+            return (
+            <div className='single-customer'> {i} :
+              <img src={customer[i]} className="single-customer-img" />
             </div>
-          )
+            )
+          }
+          else {return (
+            <div  key={i} className='single-customer' >
+              <div>{ i } : { customer[i] } </div>
+            </div>
+          )}
         })
       }
       </div>

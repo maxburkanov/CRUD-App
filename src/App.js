@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Customers from './Customers';
-import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 import SearchBar from "./SearchBar";
 import Navigation from "./Navigation";
@@ -30,13 +30,13 @@ const customers = [
   },
   {
     id: 4, name: "Max", lastName: "Co", avatar: "https://avatars0.githubusercontent.com/u/40704457?s=100&v=4",
-    email: "support@seytech.co", state: "WA", phone: 1234567703,
-    role: "student", github: "seytechschool", courses: ["js, react, algo"],
+    email: "ostu.student.gmail.com", state: "MA", phone: '508-524-9108',
+    role: "student", github: "maxburkanov", courses: ["js, react, algo"],
     payment: 12000
   },
   {
     id: 5, name: "Ulan", lastName: "Co", avatar: "https://avatars1.githubusercontent.com/u/16879917?s=100&v=4",
-    email: "support@seytech.co", state: "WA", phone: 1234567703,
+    email: "support@seytech.co", state: "IL", phone: 1234567703,
     role: "admin", github: "seytechschool", courses: ["js, react, algo"],
     payment: 12000
   },
@@ -48,23 +48,44 @@ class App extends Component {
     super();
     this.state = {
       customers,
+      searchValue: '',
+      searchBy: '',
+      dropdown: ['name', 'state', 'email', 'phone']
+
     }
   }
 
-  
+  handleSubmitSearch = (e, val, byWhat) => {
+    e.preventDefault();
+    // change this.state.customers so it renders and shows new filtered list,
+    // filter with Array.includes??
+    let arr = customers.filter(i=>{
+      return i[byWhat].toLowerCase().includes(val.trim().toLowerCase())
+    })
+    // console.log(arr)
+    this.setState({customers: arr}, ()=>{
+      console.log('this is value', byWhat)
+      } 
+    )
+  }
+  handleSelection = (val) => {
+    this.setState({searchBy: val},()=>{
+      console.log('this.state.searchBy',this.state.searchBy)
+    })
+  }
 
   render(){
     return (
       <Router>
         <div>
           <Navigation />
-          <div>
-            <SearchBar />
+          <div className="search-bar">
+            <SearchBar searchBy={this.state.searchBy} dropdown={this.state.dropdown} handleSelection={this.handleSelection} handleSubmitSearch={this.handleSubmitSearch}/>
           </div>
-          <div>
+          <div> 
             <Switch>
               <Route path="/customers/:id" >
-                <Customer customers={customers}/>
+                <Customer searchValue={this.state.searchValue}  customers={customers}/>
               </Route>
               <Route path="/customers">
                 <div className="container">

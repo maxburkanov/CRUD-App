@@ -6,7 +6,7 @@ import "./App.css";
 export default ()=>{
   return (
     <div className="navigation-bar">
-      <ul className="navigation">
+      <ul className="navigation"> 
         <li>
           <NavLink exact to="/" activeClassName="active-nav">Home</NavLink>
         </li>
