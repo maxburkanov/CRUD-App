@@ -9,7 +9,7 @@ export default (props) => {
   const [dropdownOpen, setOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [searchVal, setSearchVal] = useState('name'); 
-  const {handleSelection, searchBy, dropdown, handleSubmitSearch} = props;
+  const {handleSelection, dropdown, handleSubmitSearch} = props;
 
   const toggle = () => setOpen(!dropdownOpen);
 

@@ -51,21 +51,17 @@ class App extends Component {
       searchValue: '',
       searchBy: '',
       dropdown: ['name', 'state', 'email', 'phone']
-
     }
   }
-
+  
   handleSubmitSearch = (e, val, byWhat) => {
     e.preventDefault();
-    // change this.state.customers so it renders and shows new filtered list,
-    // filter with Array.includes??
-    let arr = customers.filter(i=>{
+    const arr = customers.filter(i=>{
       return i[byWhat].toLowerCase().includes(val.trim().toLowerCase())
     })
-    // console.log(arr)
     this.setState({customers: arr}, ()=>{
-      console.log('this is value', byWhat)
-      } 
+      console.log('this is value', this.state.customer)
+    } 
     )
   }
   handleSelection = (val) => {
@@ -73,8 +69,9 @@ class App extends Component {
       console.log('this.state.searchBy',this.state.searchBy)
     })
   }
-
+  
   render(){
+    console.log('customerscustomerscustomers',customers)
     return (
       <Router>
         <div>
@@ -85,7 +82,7 @@ class App extends Component {
           <div> 
             <Switch>
               <Route path="/customers/:id" >
-                <Customer searchValue={this.state.searchValue}  customers={customers}/>
+                <Customer searchValue={this.state.searchValue}  customers={this.state.customers}/>
               </Route>
               <Route path="/customers">
                 <div className="container">

@@ -71,9 +71,24 @@ form .search-input {
     margin: 50px;
 }
 .single-customer {
+    width: 50%;
     border-bottom: 1px solid #222222;
-    padding: 10px;
 }
+.single-customer-inner {
+    display: flex;
+    padding: 10px;
+    width: 30%;
+    justify-content: space-between;
+}
+
+
 .single-customer-img {
     width: 50px;
+}
+
+.edit-btn {
+    margin: 10px;
+}
+.edit-btn button {
+    margin-left: 10px;
 }
