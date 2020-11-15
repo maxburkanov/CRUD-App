@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import Customers from './Customers';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route, Redirect, withRouter} from 'react-router-dom';
 
+import Login from './login';
 import SearchBar from "./SearchBar";
 import Navigation from "./Navigation";
 import Customer from "./Customer";
@@ -9,53 +10,97 @@ import './App.css';
 
 
 
-const customers = [
-  {
-    id: 1, name: "Seytech", lastName: "Co", avatar: "https://www.seytech.co/images/logo.png",
-    email: "support@seytech.co", state: "WA", phone: 1234567703,
-    role: "student", github: "seytechschool", courses: ["js, react, algo"],
-    payment: 12000
-  },
-  {
-    id: 2, name: "Eliza", lastName: "Co", avatar: "https://avatars1.githubusercontent.com/u/68719361?s=100&v=4",
-    email: "support@seytech.co", state: "WA", phone: 1234567703,
-    role: "student", github: "seytechschool", courses: ["js, react, algo"],
-    payment: 12000
-  },
-  {
-    id: 3, name: "Adilet", lastName: "Co", avatar: "https://avatars0.githubusercontent.com/u/55602501?s=100&v=4",
-    email: "support@seytech.co", state: "WA", phone: 1234567703,
-    role: "instructor", github: "seytechschool", courses: ["js, react, algo"],
-    payment: 12000
-  },
-  {
-    id: 4, name: "Max", lastName: "Co", avatar: "https://avatars0.githubusercontent.com/u/40704457?s=100&v=4",
-    email: "ostu.student.gmail.com", state: "MA", phone: '508-524-9108',
-    role: "student", github: "maxburkanov", courses: ["js, react, algo"],
-    payment: 12000
-  },
-  {
-    id: 5, name: "Ulan", lastName: "Co", avatar: "https://avatars1.githubusercontent.com/u/16879917?s=100&v=4",
-    email: "support@seytech.co", state: "IL", phone: 1234567703,
-    role: "admin", github: "seytechschool", courses: ["js, react, algo"],
-    payment: 12000
-  },
-]
+// const customers = [
+//   {
+//     id: 1, name: "Seytech", lastName: "Co", avatar: "https://www.seytech.co/images/logo.png",
+//     email: "support@seytech.co", state: "WA", phone: 1234567703,
+//     role: "student", github: "seytechschool", courses: ["js, react, algo"],
+//     payment: 12000
+//   },
+//   {
+//     id: 2, name: "Eliza", lastName: "Co", avatar: "https://avatars1.githubusercontent.com/u/68719361?s=100&v=4",
+//     email: "support@seytech.co", state: "WA", phone: 1234567703,
+//     role: "student", github: "seytechschool", courses: ["js, react, algo"],
+//     payment: 12000
+//   },
+//   {
+//     id: 3, name: "Adilet", lastName: "Co", avatar: "https://avatars0.githubusercontent.com/u/55602501?s=100&v=4",
+//     email: "support@seytech.co", state: "WA", phone: 1234567703,
+//     role: "instructor", github: "seytechschool", courses: ["js, react, algo"],
+//     payment: 12000
+//   },
+//   {
+//     id: 4, name: "Max", lastName: "Co", avatar: "https://avatars0.githubusercontent.com/u/40704457?s=100&v=4",
+//     email: "ostu.student.gmail.com", state: "MA", phone: '508-524-9108',
+//     role: "student", github: "maxburkanov", courses: ["js, react, algo"],
+//     payment: 12000
+//   },
+//   {
+//     id: 5, name: "Ulan", lastName: "Co", avatar: "https://avatars1.githubusercontent.com/u/16879917?s=100&v=4",
+//     email: "support@seytech.co", state: "IL", phone: 1234567703,
+//     role: "admin", github: "seytechschool", courses: ["js, react, algo"],
+//     payment: 12000
+//   },
+// ]
 
 class App extends Component {
 
   constructor(){
     super();
     this.state = {
-      customers,
+      customers: [],
       searchValue: '',
       searchBy: '',
-      dropdown: ['name', 'state', 'email', 'phone']
+      dropdown: ['name', 'state', 'email', 'phone'],
+      data: [],
+      isLogged: false,
+      userInfo: {},
     }
+  }
+
+  componentDidMount() {
+    const userInfo = JSON.parse(localStorage.getItem('user'))
+    if (userInfo) {
+      this.setState({ userInfo, isLogged: true })
+      console.log('user logged', userInfo, this.state.isLogged)
+      this.props.history.push('/customers')
+    }
+    fetch('http://localhost:5000/api/customers')
+      .then(response => response.json())
+      .then(data => this.setState({customers: data}, ()=>{console.log('data from backend ', this.state.customers)}))
+      .catch(err=>console.log('this error', err))
+  }
+
+  handleSave = (singleData) => {
+    const data = {
+      "name": "Some",
+      "lastName": "Person",
+      "avatar": "url",
+      "email": "test@test.com",
+      "state": "CA",
+      "phone": 123321,
+      "role": "student",
+      "github": "github/user",
+      "courses": ["js", "react"],
+      "payment": 10
+  }
+    console.log('save was clicked', singleData)
+
+    fetch('http://localhost:5000/api/customers',{
+      method: 'POST',
+      body: JSON.stringify( data ),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => response.json())
+    .then(result => alert(JSON.stringify(result)))
+    .catch(err => console.log(err))
   }
   
   handleSubmitSearch = (e, val, byWhat) => {
     e.preventDefault();
+    const {customers} = this.state;
     const arr = customers.filter(i=>{
       return i[byWhat].toLowerCase().includes(val.trim().toLowerCase())
     })
@@ -70,28 +115,41 @@ class App extends Component {
     })
   }
   
+  setUser = (userInfo) => {
+    this.setState({ isLogged: true, userInfo })
+  }
+
+  handleLoggout = () => {
+    this.setState({ isLogged: false, userInfo: {} })
+    localStorage.removeItem('user')
+  }
+
   render(){
+    const {customers, isLogged,userInfo} = this.state;
     console.log('customerscustomerscustomers',customers)
     return (
-      <Router>
+      // <Router>
         <div>
-          <Navigation />
-          <div className="search-bar">
-            <SearchBar searchBy={this.state.searchBy} dropdown={this.state.dropdown} handleSelection={this.handleSelection} handleSubmitSearch={this.handleSubmitSearch}/>
-          </div>
+          <Navigation isLogged={isLogged} handleLoggout={this.handleLoggout} />
           <div> 
             <Switch>
               <Route path="/customers/:id" >
-                <Customer searchValue={this.state.searchValue}  customers={this.state.customers}/>
+                <Customer searchValue={this.state.searchValue}  customers={this.state.customers} handleSave={this.handleSave} />
               </Route>
               <Route path="/customers">
-                <div className="container">
-                  <h1> Seytech Customers</h1>
-                  <Customers customers={this.state.customers} />
+                { isLogged? <div> <div className="search-bar">
+                  <SearchBar searchBy={this.state.searchBy} dropdown={this.state.dropdown} handleSelection={this.handleSelection} handleSubmitSearch={this.handleSubmitSearch}/>
                 </div>
+                <div className="container">
+                  <h1> Welcome {userInfo.name} </h1>
+                  <Customers customers={this.state.customers} />
+                </div> </div> : <Redirect to="/login" />}
               </Route>
               <Route path="/about">
                 <div>about</div>                
+              </Route>
+              <Route path="/login">
+                <Login setUser={this.setUser} />                
               </Route>
               <Route path="/topics">
                 <div>topics</div>                
@@ -102,7 +160,7 @@ class App extends Component {
             </Switch>
           </div>
         </div>
-      </Router>
+      // </Router>
     )
   }
 }
@@ -110,7 +168,7 @@ class App extends Component {
 
 
 
-export default App;
+export default withRouter(App);
 
 
 

@@ -7,7 +7,8 @@ import "./App.css";
 class Customer extends React.Component {
   constructor(props) {
     const {id} = props.match.params
-    const customer = props.customers.find(i => i.id === Number(id))
+    console.log("id idid", id)
+    const customer = props.customers.find(i => i._id === id)
     const originalData = JSON.parse(JSON.stringify(customer))
     super(props);
     this.state = {
@@ -35,9 +36,13 @@ class Customer extends React.Component {
     const {customer} = this.state;
     const {id} = this.props.match.params;
     this.props.history.action = 'edit'
-    console.log('params params', this.props.history)
-    return (
+
+    // console.log('params params', customer)
+
+    
+    return  (
       <div style={{ margin:"20px" }}>
+        
       {
         Object.keys(customer).map(i=>{
           const customerI = this.state.isEdit? <input autoFocus value={customer[i]} onChange={(e)=>this.handleInput(e,i)} /> : customer[i];
@@ -48,7 +53,8 @@ class Customer extends React.Component {
             </div>
             )
           }
-          if (i === 'id') return 
+          if (i === '_id') return 
+          if (i === '__v') return 
           else {return (
             <div  key={i} className='single-customer'>
               <div className='single-customer-inner'>
@@ -60,7 +66,8 @@ class Customer extends React.Component {
         })
       
       }
-      <EditBtn state={this.state} handleCancel={this.handleCancel} handleChange={this.handleChange} />
+      
+      <EditBtn state={this.state} handleSave={this.props.handleSave}  handleCancel={this.handleCancel} handleChange={this.handleChange} />
       </div>
     )
   }

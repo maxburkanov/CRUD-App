@@ -5,6 +5,15 @@ import {withRouter, Link} from "react-router-dom";
 import './App.css';
 
 class Customers extends Component {
+  constructor() {
+    super();
+    this.state = {
+      data: [],
+      row: 1,
+    }
+  }
+
+
 
   render(){
     const {customers} = this.props;
@@ -29,13 +38,13 @@ class Customers extends Component {
           <tbody>
             {
               customers.map(customer=>{
-                const { id, name, lastName, avatar, email, state, phone,
+                const { _id, name, lastName, avatar, email, state, phone,
                 role, github, courses, payment} = customer;
                 return (
-                <tr key={id}>
-                  <th scope="row">{id}</th>
+                <tr key={_id}>
+                  <th scope="row">{this.state.row}</th>
                   <td><img src={avatar} alt="avatar"/></td>
-                  <td> <Link to={`/customers/${id}`}>{name} {lastName}</Link> </td>
+                  <td> <Link to={`/customers/${_id}`}>{name} {lastName}</Link> </td>
                   <td>{state}</td>
                   <td>{email}</td>
                   <td>{phone}</td>
@@ -51,6 +60,7 @@ class Customers extends Component {
             
           </tbody>
         </Table>
+        <p>{customers === undefined ? 'Fetching users...' : ''}</p>
       </div>
     )
   }

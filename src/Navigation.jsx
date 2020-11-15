@@ -3,7 +3,7 @@ import {NavLink} from 'react-router-dom';
 
 import "./App.css";
 
-export default ()=>{
+export default ({isLogged, handleLoggout})=>{
   return (
     <div className="navigation-bar">
       <ul className="navigation"> 
@@ -18,6 +18,9 @@ export default ()=>{
         </li>
         <li>
         <NavLink to="/customers" activeClassName="active-nav">Customers</NavLink>
+        </li>
+        <li>
+        { isLogged && <NavLink to="/login" onClick={handleLoggout} activeClassName="active-nav">Log out</NavLink>}
         </li>
       </ul>
     </div>
