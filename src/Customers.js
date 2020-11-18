@@ -49,7 +49,7 @@ class Customers extends Component {
                   <td>{email}</td>
                   <td>{phone}</td>
                   <td>{payment}</td>
-                  <td>{courses}</td>
+                  <td>{courses.map(i=><div>{i}</div>)}</td>
                   <td>{role}</td>
                   <td>{github}</td>
                   <td>Actions</td>

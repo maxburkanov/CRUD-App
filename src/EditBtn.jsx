@@ -4,16 +4,15 @@ import {useParams, withRouter} from 'react-router-dom';
 
 import "./App.css";
 
-export default withRouter( ({state, handleSave, handleChange, handleCancel, match})  => {
+export default withRouter( ({state, handleChange, handleCancel, match})  => {
   const handleEdit = () => {
       setEdit(!edit)
       handleChange()
     }
   const handleSaveBtn = () => {
-    // console.log('state',state.customer)
     setEdit(!edit)
     handleChange()
-    handleSave(state.customer)
+    // handleSave(state.customer)
   } 
   const onCancel = () => {
     setEdit(!edit)

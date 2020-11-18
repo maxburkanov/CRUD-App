@@ -32,6 +32,8 @@ li a:hover {
 }
 
 .search-bar {
+    display: flex;
+    justify-content: space-evenly;
     margin-left: 20px;
 }
 form {
@@ -65,7 +67,7 @@ form .search-input {
 }
 .customers img {
     width: 50px;
-    border-radius: 50px;
+    border-radius: 50%;
 }
 .single-customer-wrapper {
     margin: 50px;
@@ -91,4 +93,10 @@ form .search-input {
 }
 .edit-btn button {
     margin-left: 10px;
+}
+
+/* Modal Body */
+.ModalBody {
+    display: flex;
+    flex-direction: column;
 }

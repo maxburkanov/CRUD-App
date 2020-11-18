@@ -6,6 +6,7 @@ import Login from './login';
 import SearchBar from "./SearchBar";
 import Navigation from "./Navigation";
 import Customer from "./Customer";
+import ModalPage from "./Modal";
 import './App.css';
 
 
@@ -71,30 +72,30 @@ class App extends Component {
       .catch(err=>console.log('this error', err))
   }
 
-  handleSave = (singleData) => {
-    const data = {
-      "name": "Some",
-      "lastName": "Person",
-      "avatar": "url",
-      "email": "test@test.com",
-      "state": "CA",
-      "phone": 123321,
-      "role": "student",
-      "github": "github/user",
-      "courses": ["js", "react"],
-      "payment": 10
-  }
-    console.log('save was clicked', singleData)
+  handleStudentSubmit = (singlestudent) => {
+  //   const data = {
+  //     "name": "Aziz",
+  //     "lastName": "Abdullaev",
+  //     "avatar": "url",
+  //     "email": "test@test.com",
+  //     "state": "CA",
+  //     "phone": 123321,
+  //     "role": "student",
+  //     "github": "github/user",
+  //     "courses": ["js", "react"],
+  //     "payment": 10
+  // }
+    console.log('submit was clicked', singlestudent )
 
     fetch('http://localhost:5000/api/customers',{
       method: 'POST',
-      body: JSON.stringify( data ),
+      body: JSON.stringify( singlestudent ),
       headers: {
         'Content-Type': 'application/json'
       }
     })
     .then(response => response.json())
-    .then(result => alert(JSON.stringify(result)))
+    .then(result => console.log(JSON.stringify(result)))
     .catch(err => console.log(err))
   }
   
@@ -134,11 +135,12 @@ class App extends Component {
           <div> 
             <Switch>
               <Route path="/customers/:id" >
-                <Customer searchValue={this.state.searchValue}  customers={this.state.customers} handleSave={this.handleSave} />
+                <Customer searchValue={this.state.searchValue}  customers={this.state.customers} />
               </Route>
               <Route path="/customers">
                 { isLogged? <div> <div className="search-bar">
                   <SearchBar searchBy={this.state.searchBy} dropdown={this.state.dropdown} handleSelection={this.handleSelection} handleSubmitSearch={this.handleSubmitSearch}/>
+                  <ModalPage handleStudentSubmit={this.handleStudentSubmit} />
                 </div>
                 <div className="container">
                   <h1> Welcome {userInfo.name} </h1>
