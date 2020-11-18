@@ -1,4 +1,4 @@
-Seytech Customers CRUD application.
+Customers CRUD application.
 
 ## Data
     * id, name, lastName, avatar, email, state, phone, role, github username, courses, payments, status, repl progress, actions
@@ -20,18 +20,14 @@ Seytech Customers CRUD application.
     * Reactstrap
 
 
-## Teams
-    * Back End:
-        * Tamerlan
-        * Aidana
-        * Mahabat
-        * Tolgonai
 
-    * Front End: Rest.
+    * Back End:
+        * Max
+
+    * Front End: 
+         *Max.
 
 ## Day 1 - 10/28/2020
-    * Practice
-        * React Basics 
             * Life-cycle methods
             * Setstate
             * Component vs Class
@@ -40,8 +36,3 @@ Seytech Customers CRUD application.
     * Reactstrap(Bootstrap)
     * CRUD Apps
     * Project start/management
-
-    * Homework
-        * Learn React Router
-        * Clone from github
- 
