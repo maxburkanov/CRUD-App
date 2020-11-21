@@ -22,6 +22,9 @@ export default ({isLogged, handleLoggout})=>{
         <li>
         { isLogged && <NavLink to="/login" onClick={handleLoggout} activeClassName="active-nav">Log out</NavLink>}
         </li>
+        <li>
+        <NavLink to="/movies" activeClassName="active-nav">Movies</NavLink>
+        </li>
       </ul>
     </div>
   )

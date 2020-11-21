@@ -7,6 +7,7 @@ import SearchBar from "./SearchBar";
 import Navigation from "./Navigation";
 import Customer from "./Customer";
 import ModalPage from "./Modal";
+import Movies from "./Movies/Movies";
 import './App.css';
 
 
@@ -125,6 +126,7 @@ class App extends Component {
     localStorage.removeItem('user')
   }
 
+
   render(){
     const {customers, isLogged,userInfo} = this.state;
     console.log('customerscustomerscustomers',customers)
@@ -155,6 +157,9 @@ class App extends Component {
               </Route>
               <Route path="/topics">
                 <div>topics</div>                
+              </Route>
+              <Route exact path="/movies">
+                <Movies />                
               </Route>
               <Route path="/">
                 <div>home</div>                

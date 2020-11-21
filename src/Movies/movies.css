@@ -1,0 +1,9 @@
+.movie-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.poster-wrapper {
+  margin: 10px;
+  width: 185px;
+}
